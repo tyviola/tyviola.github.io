@@ -1,2 +1,2 @@
 # tyviola.github.io
-company page for viola technology
+company page for Viola Technology LLC
