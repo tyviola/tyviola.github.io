@@ -3,7 +3,7 @@
   const current = location.pathname.split('/').pop() || 'index.html';
 
   const links = [
-    { href: 'consulting.html',   label: '💼 Biz Tech Consulting' },
+    { href: 'consulting.html',   label: '💼 Business Tech Consulting' },
     { href: 'automation.html',   label: '⚙️ Automation' },
     { href: 'DigitalForms.html', label: '📋 Digital Forms' },
     { href: 'cases.html',        label: '📁 Case Studies' },
@@ -19,14 +19,7 @@
     `<a href="${l.href}">${l.label}</a>`
   ).join('');
 
-  const logoSVG = `<svg viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="50" cy="10" r="7" stroke="#5B3FA6" stroke-width="5" fill="none"/>
-    <line x1="50" y1="17" x2="50" y2="38" stroke="#5B3FA6" stroke-width="5" stroke-linecap="round"/>
-    <path d="M50 38 L22 58 Q14 75 50 92 Q86 75 78 58 L50 38Z" stroke="#5B3FA6" stroke-width="5" fill="none" stroke-linejoin="round"/>
-    <path d="M50 38 L30 54" stroke="#5B3FA6" stroke-width="4" stroke-linecap="round"/>
-    <path d="M50 38 L70 54" stroke="#5B3FA6" stroke-width="4" stroke-linecap="round"/>
-  </svg>`;
-
+const logoSVG = `<img src="VTlogoFavicon.png" alt="Viola Technology" style="width:36px;height:36px;object-fit:contain;" />`;
   const navHTML = `
     <nav class="site-nav" role="navigation" aria-label="Main navigation">
       <a href="index.html" class="nav-logo" aria-label="Viola Technology home">
