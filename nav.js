@@ -3,7 +3,7 @@
   const current = location.pathname.split('/').pop() || 'index.html';
 
   const links = [
-    { href: 'consulting.html',   label: '💼 Business Tech Consulting' },
+    { href: 'consulting.html',   label: '💼 Business Consulting' },
     { href: 'automation.html',   label: '⚙️ Automation' },
     { href: 'DigitalForms.html', label: '📋 Digital Forms' },
     { href: 'cases.html',        label: '📁 Case Studies' },
