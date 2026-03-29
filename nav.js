@@ -1,84 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Viola Technology – Insights" />
-  <title>Insights – Viola Technology</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <a href="#main" class="skip-link">Skip to content</a>
-  <script src="nav.js"></script>
+// nav.js – inject consistent nav + hamburger drawer on every page
+(function () {
+  const current = location.pathname.split('/').pop() || 'index.html';
 
-  <main id="main" class="page-shell">
-    <div class="page-hero">
-      <div class="page-hero-label">Insights</div>
-      <h1>Trends, Strategies &<br>Technology Perspectives</h1>
-      <p>Stay ahead with the latest thinking on automation, AI, digital transformation, and the technology moves that matter for growing businesses.</p>
-    </div>
+  const links = [
+    { href: 'consulting.html',   label: '💼 Biz Tech Consulting' },
+    { href: 'automation.html',   label: '⚙️ Automation' },
+    { href: 'DigitalForms.html', label: '📋 Digital Forms' },
+    { href: 'cases.html',        label: '📁 Case Studies' },
+    { href: 'contact.html',      label: '✉️ Contact' },
+  ];
 
-    <div class="page-content">
-      <div class="section-label">Latest Articles</div>
-      <h2 class="section-title">What's on Our Mind</h2>
-      <p class="section-sub">Practical perspectives from practitioners — no fluff, no jargon.</p>
+  const pills = links.map(l => {
+    const active = current === l.href ? ' active' : '';
+    return `<a href="${l.href}" class="nav-pill${active}">${l.label}</a>`;
+  }).join('');
 
-      <div class="insights-grid">
-        <div class="insight-card">
-          <div class="insight-top">
-            <div class="insight-cat">AI & Automation</div>
-            <h3>5 Business Processes You Should Automate Right Now</h3>
-          </div>
-          <div class="insight-body">
-            <p>Most businesses have more automatable tasks than they realize. Here are the five highest-ROI processes to tackle first, regardless of your industry.</p>
-            <a href="contact.html" class="insight-link">Read more →</a>
-          </div>
-        </div>
-        <div class="insight-card">
-          <div class="insight-top">
-            <div class="insight-cat">Cloud Strategy</div>
-            <h3>Cloud Migration Doesn't Have to Be Scary — Here's Why</h3>
-          </div>
-          <div class="insight-body">
-            <p>The biggest barrier to cloud adoption isn't cost or complexity — it's uncertainty. We break down what a smart, phased migration actually looks like.</p>
-            <a href="contact.html" class="insight-link">Read more →</a>
-          </div>
-        </div>
-        <div class="insight-card">
-          <div class="insight-top">
-            <div class="insight-cat">Digital Forms</div>
-            <h3>Why Paper Forms Are Costing You More Than You Think</h3>
-          </div>
-          <div class="insight-body">
-            <p>Between lost documents, data entry errors, and processing delays, paper forms carry a hidden tax on your team's time. Here's how to calculate yours.</p>
-            <a href="contact.html" class="insight-link">Read more →</a>
-          </div>
-        </div>
+  const drawerLinks = links.map(l =>
+    `<a href="${l.href}">${l.label}</a>`
+  ).join('');
+
+  const logoSVG = `<svg viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="10" r="7" stroke="#5B3FA6" stroke-width="5" fill="none"/>
+    <line x1="50" y1="17" x2="50" y2="38" stroke="#5B3FA6" stroke-width="5" stroke-linecap="round"/>
+    <path d="M50 38 L22 58 Q14 75 50 92 Q86 75 78 58 L50 38Z" stroke="#5B3FA6" stroke-width="5" fill="none" stroke-linejoin="round"/>
+    <path d="M50 38 L30 54" stroke="#5B3FA6" stroke-width="4" stroke-linecap="round"/>
+    <path d="M50 38 L70 54" stroke="#5B3FA6" stroke-width="4" stroke-linecap="round"/>
+  </svg>`;
+
+  const navHTML = `
+    <nav class="site-nav" role="navigation" aria-label="Main navigation">
+      <a href="index.html" class="nav-logo" aria-label="Viola Technology home">
+        ${logoSVG}
+        <span class="nav-logo-text">VIOLA <span>TECHNOLOGY</span></span>
+      </a>
+      <div class="nav-pills">${pills}</div>
+      <div class="nav-right">
+        <a href="contact.html" class="nav-cta">Get Started</a>
+        <button class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+          <span></span><span></span><span></span>
+        </button>
       </div>
+    </nav>
+    <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+      ${drawerLinks}
+      <a href="contact.html" class="drawer-cta">Schedule a Free Consultation</a>
     </div>
+  `;
 
-    <div class="cta-band">
-      <div>
-        <h2>Want These Insights Applied to Your Business?</h2>
-        <p>We'll translate the big ideas into a concrete plan for your specific situation.</p>
-      </div>
-      <div class="cta-right">
-        <a href="contact.html" class="btn-white">Talk to an Expert</a>
-        <div class="cta-trust">✓ No commitment &nbsp;&nbsp; ✓ Same-week availability</div>
-      </div>
-    </div>
-  </main>
+  document.body.insertAdjacentHTML('afterbegin', navHTML);
 
-  <footer class="site-footer">
-    <div class="footer-logo">VIOLA <span>TECHNOLOGY</span></div>
-    <div class="footer-links">
-      <a href="consulting.html">Services</a>
-      <a href="automation.html">Automation</a>
-      <a href="cases.html">Case Studies</a>
-      <a href="DigitalForms.html">Digital Forms</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="footer-copy">© 2025 Viola Technology</div>
-  </footer>
-</body>
-</html>
+  // hamburger toggle
+  const btn = document.querySelector('.hamburger');
+  const drawer = document.getElementById('nav-drawer');
+  btn.addEventListener('click', () => {
+    const open = drawer.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    drawer.setAttribute('aria-hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  // close on link click
+  drawer.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      btn.classList.remove('open');
+      document.body.style.overflow = '';
+    })
+  );
+})();
