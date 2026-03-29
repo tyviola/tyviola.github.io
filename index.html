@@ -3,35 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Viola Technology - IT Consulting and Services" />
-  <title>Viola Technology</title>
-  <link rel="stylesheet" href="assets/styles.css" />
+  <meta name="description" content="Viola Technology – Contact Us" />
+  <title>Contact – Viola Technology</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700;
+      margin-bottom: 12px; color: var(--charcoal);
+    }
+    .contact-info p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 28px; }
+    .contact-detail {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 15px; color: var(--charcoal); margin-bottom: 14px;
+    }
+    .contact-detail a { color: var(--purple); text-decoration: none; font-weight: 500; }
+    .contact-detail a:hover { text-decoration: underline; }
+    .contact-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--purple-glow); display: flex; align-items: center;
+      justify-content: center; font-size: 18px; flex-shrink: 0;
+    }
+    .form-wrap {
+      background: #fff; border-radius: 16px;
+      padding: 40px; border: 1px solid rgba(0,0,0,.06);
+    }
+    .form-wrap h3 {
+      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700;
+      margin-bottom: 24px; color: var(--charcoal);
+    }
+  </style>
 </head>
 <body>
   <a href="#main" class="skip-link">Skip to content</a>
-  <header>
-    <div class="logo">Viola Technology</div>
-    <nav>
-      <ul>
-       <li><a href="index.html">Home</a></li>
-        <li><a href="consulting.html">Services</a></li>
-        <li><a href="automation">Automation</a></li>
-        <li><a href="insights.html">Insights</a></li>
-        <li><a href="DigitalForms.html">Digital Forms</a></li>
-        <li><a href="cases.html">Case Studies</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main id="main">
-    <section class="hero">
-      <h1>Transforming Businesses with Technology</h1>
-      <p>We help organizations streamline, automate, and innovate.</p>
-      <a href="services.html" class="btn">Explore Services</a>
-    </section>
+  <script src="nav.js"></script>
+
+  <main id="main" class="page-shell">
+    <div class="page-hero">
+      <div class="page-hero-label">Get In Touch</div>
+      <h1>Let's Talk About<br>Your Business</h1>
+      <p>Whether you have a specific project in mind or just want to explore options, we're ready to help.</p>
+    </div>
+
+    <div class="page-content">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>How We Can Help</h3>
+          <p>Not sure where to start? That's exactly where we come in. A quick conversation is all it takes to figure out your next move.</p>
+          <div class="contact-detail">
+            <div class="contact-icon">✉️</div>
+            <div>Email us at<br><a href="mailto:tyviola@violatechnology.com">tyviola@violatechnology.com</a></div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon">📅</div>
+            <div>Same-week availability<br><span style="color:var(--text-muted);font-size:13px">No commitment required</span></div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon">🌐</div>
+            <div>Serving businesses<br><span style="color:var(--text-muted);font-size:13px">remotely and on-site</span></div>
+          </div>
+        </div>
+        <div class="form-wrap">
+          <h3>Send Us a Message</h3>
+          <script type="text/javascript" src="https://form.jotform.com/jsform/252426313233043"></script>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-band">
+      <div>
+        <h2>Prefer to Skip the Form?</h2>
+        <p>Drop us a direct email and we'll get back to you within one business day.</p>
+      </div>
+      <div class="cta-right">
+        <a href="mailto:tyviola@violatechnology.com" class="btn-white">Email Us Directly</a>
+      </div>
+    </div>
   </main>
-  <footer>
-    <p>&copy; 2025 Viola Technology</p>
+
+  <footer class="site-footer">
+    <div class="footer-logo">VIOLA <span>TECHNOLOGY</span></div>
+    <div class="footer-links">
+      <a href="consulting.html">Services</a>
+      <a href="automation.html">Automation</a>
+      <a href="cases.html">Case Studies</a>
+      <a href="DigitalForms.html">Digital Forms</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 Viola Technology</div>
   </footer>
 </body>
 </html>

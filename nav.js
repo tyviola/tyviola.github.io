@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Viola Technology – Insights" />
+  <title>Insights – Viola Technology</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <script src="nav.js"></script>
+
+  <main id="main" class="page-shell">
+    <div class="page-hero">
+      <div class="page-hero-label">Insights</div>
+      <h1>Trends, Strategies &<br>Technology Perspectives</h1>
+      <p>Stay ahead with the latest thinking on automation, AI, digital transformation, and the technology moves that matter for growing businesses.</p>
+    </div>
+
+    <div class="page-content">
+      <div class="section-label">Latest Articles</div>
+      <h2 class="section-title">What's on Our Mind</h2>
+      <p class="section-sub">Practical perspectives from practitioners — no fluff, no jargon.</p>
+
+      <div class="insights-grid">
+        <div class="insight-card">
+          <div class="insight-top">
+            <div class="insight-cat">AI & Automation</div>
+            <h3>5 Business Processes You Should Automate Right Now</h3>
+          </div>
+          <div class="insight-body">
+            <p>Most businesses have more automatable tasks than they realize. Here are the five highest-ROI processes to tackle first, regardless of your industry.</p>
+            <a href="contact.html" class="insight-link">Read more →</a>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-top">
+            <div class="insight-cat">Cloud Strategy</div>
+            <h3>Cloud Migration Doesn't Have to Be Scary — Here's Why</h3>
+          </div>
+          <div class="insight-body">
+            <p>The biggest barrier to cloud adoption isn't cost or complexity — it's uncertainty. We break down what a smart, phased migration actually looks like.</p>
+            <a href="contact.html" class="insight-link">Read more →</a>
+          </div>
+        </div>
+        <div class="insight-card">
+          <div class="insight-top">
+            <div class="insight-cat">Digital Forms</div>
+            <h3>Why Paper Forms Are Costing You More Than You Think</h3>
+          </div>
+          <div class="insight-body">
+            <p>Between lost documents, data entry errors, and processing delays, paper forms carry a hidden tax on your team's time. Here's how to calculate yours.</p>
+            <a href="contact.html" class="insight-link">Read more →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-band">
+      <div>
+        <h2>Want These Insights Applied to Your Business?</h2>
+        <p>We'll translate the big ideas into a concrete plan for your specific situation.</p>
+      </div>
+      <div class="cta-right">
+        <a href="contact.html" class="btn-white">Talk to an Expert</a>
+        <div class="cta-trust">✓ No commitment &nbsp;&nbsp; ✓ Same-week availability</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-logo">VIOLA <span>TECHNOLOGY</span></div>
+    <div class="footer-links">
+      <a href="consulting.html">Services</a>
+      <a href="automation.html">Automation</a>
+      <a href="cases.html">Case Studies</a>
+      <a href="DigitalForms.html">Digital Forms</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 Viola Technology</div>
+  </footer>
+</body>
+</html>
