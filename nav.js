@@ -19,7 +19,7 @@
     `<a href="${l.href}">${l.label}</a>`
   ).join('');
 
-const logoSVG = `<img src="VTlogoFaviconNoBackground.png" alt="Viola Technology" style="width:36px;height:36px;object-fit:contain;" />`;
+const logoSVG = `<img src="VTlogoNoBackground.svg" alt="Viola Technology" style="width:36px;height:36px;object-fit:contain;" />`;
   const navHTML = `
     <nav class="site-nav" role="navigation" aria-label="Main navigation">
       <a href="index.html" class="nav-logo" aria-label="Viola Technology home">
