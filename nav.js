@@ -5,6 +5,7 @@
   const links = [
     { href: 'consulting.html',   label: '💼 Business Consulting' },
     { href: 'automation.html',   label: '⚙️ Automation' },
+    { href: 'reporting.html',    label: '📊 Reporting & Dashboards' },
     { href: 'DigitalForms.html', label: '📋 Digital Forms' },
     { href: 'cases.html',        label: '📁 Case Studies' },
     { href: 'contact.html',      label: '✉️ Contact' },
