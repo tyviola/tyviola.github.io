@@ -174,12 +174,10 @@ body {
   font-size: clamp(34px, 5vw, 58px);
   font-weight: 800; letter-spacing: -.02em;
   color: #fff;
-  /* increased line-height from 1.08 — main descender fix for headings */
-  line-height: 1.18;
+  line-height: 1.28;
   max-width: 700px; position: relative; z-index: 1;
-  margin-bottom: 22px;
-  /* padding-bottom catches descenders on last line */
-  padding-bottom: 4px;
+  margin-bottom: 24px;
+  padding-bottom: 8px;
 }
 .page-hero p {
   font-size: 18px; font-weight: 300; color: rgba(255,255,255,.6);
@@ -204,9 +202,8 @@ body {
   font-weight: 800; letter-spacing: -.02em;
   color: var(--charcoal);
   margin-bottom: 16px;
-  /* increased from 1.1 to give descenders room */
-  line-height: 1.2;
-  padding-bottom: 4px;
+  line-height: 1.28;
+  padding-bottom: 8px;
 }
 .section-sub {
   font-size: 16px; color: var(--text-muted);
