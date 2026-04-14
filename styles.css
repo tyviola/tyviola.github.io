@@ -174,10 +174,22 @@ body {
   font-size: clamp(34px, 5vw, 58px);
   font-weight: 800; letter-spacing: -.02em;
   color: #fff;
-  line-height: 1.28;
+  /* generous line-height so highlight boxes never overlap descenders */
+  line-height: 1.6;
   max-width: 700px; position: relative; z-index: 1;
-  margin-bottom: 24px;
-  padding-bottom: 8px;
+  margin-bottom: 32px;
+  /* explicit padding so descenders on last line are never clipped */
+  padding-bottom: 16px;
+}
+/* inline highlight spans inside hero h1 — add vertical padding so
+   the colored box doesn't clip descenders of the line below */
+.page-hero h1 em,
+.page-hero h1 span,
+.page-hero h1 mark {
+  padding: 4px 6px 8px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  line-height: inherit;
 }
 .page-hero p {
   font-size: 18px; font-weight: 300; color: rgba(255,255,255,.6);
