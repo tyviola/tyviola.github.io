@@ -166,7 +166,7 @@ body {
 .page-hero-label {
   font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--purple-light); font-weight: 600;
-  margin-bottom: 16px; line-height: 1.6;
+  margin-bottom: 16px; line-height: 1.8;
   position: relative; z-index: 1;
 }
 .page-hero h1 {
