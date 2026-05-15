@@ -398,3 +398,72 @@ body {
   line-height: 1.5; padding-bottom: 2px;
 }
 .insight-link:hover { gap: 10px; }
+
+/* ══════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════ */
+
+/* Tablet: ≤ 900px */
+@media (max-width: 900px) {
+  .site-nav { padding: 0 24px; gap: 12px; }
+
+  .nav-pills { gap: 5px; }
+  .nav-pill { font-size: 11px; padding: 6px 11px; }
+
+  .page-hero { padding: 64px 40px 60px; }
+  .page-content { padding: 60px 40px; }
+
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .insights-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .cta-band { padding: 64px 40px; flex-direction: column; align-items: flex-start; }
+
+  .site-footer { padding: 40px 40px; flex-direction: column; align-items: flex-start; gap: 20px; }
+
+  .case-card { grid-template-columns: 1fr; }
+  .case-result { text-align: left; width: fit-content; }
+}
+
+/* Mobile: ≤ 640px */
+@media (max-width: 640px) {
+  /* Nav – hide pills, show hamburger only */
+  .site-nav { padding: 0 20px; height: 64px; }
+  .nav-pills { display: none; }
+  .nav-cta  { display: none; }
+  .page-shell { padding-top: 64px; }
+
+  /* Nav drawer adjustments */
+  .nav-drawer { top: 64px; padding: 36px 24px 32px; }
+  .nav-drawer a { font-size: 22px; padding: 14px 0; }
+
+  /* Hero */
+  .page-hero { padding: 48px 20px 44px; }
+  .page-hero h1 { font-size: clamp(28px, 8vw, 42px); }
+  .page-hero p  { font-size: 16px; }
+
+  /* Content */
+  .page-content { padding: 48px 20px; }
+  .section-sub  { margin-bottom: 36px; }
+
+  /* Single-column grids */
+  .cards-grid    { grid-template-columns: 1fr; gap: 16px; }
+  .insights-grid { grid-template-columns: 1fr; gap: 16px; }
+
+  /* CTA band */
+  .cta-band { padding: 48px 20px; }
+  .cta-band h2  { font-size: clamp(22px, 6vw, 32px); }
+  .btn-white    { padding: 14px 24px; font-size: 14px; }
+  .cta-right    { width: 100%; }
+
+  /* Footer */
+  .site-footer { padding: 36px 20px; gap: 16px; }
+  .footer-links { gap: 16px; }
+
+  /* Case cards */
+  .case-card { padding: 28px 20px; }
+  .case-result { min-width: unset; padding: 16px 20px; }
+
+  /* Insight cards */
+  .insight-top { padding: 24px 20px 20px; }
+  .insight-body { padding: 20px 20px 18px; }
+}
