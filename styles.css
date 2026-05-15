@@ -467,3 +467,15 @@ body {
   .insight-top { padding: 24px 20px 20px; }
   .insight-body { padding: 20px 20px 18px; }
 }
+
+
+/* Home page mobile fixes */
+@media (max-width: 640px) {
+  .services-grid { grid-template-columns: 1fr !important; gap: 16px; }
+  .service-card { padding: 24px 20px; }
+  .contact-grid { grid-template-columns: 1fr !important; gap: 28px; }
+  .form-wrap { padding: 24px 20px; }
+  .form-wrap iframe,
+  .form-wrap .jf-form-buttons-container,
+  .form-wrap script { max-width: 100%; }
+}
