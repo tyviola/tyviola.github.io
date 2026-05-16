@@ -141,19 +141,6 @@ body {
   border: none;
 }
 
-.jotform-wrapper {
-  width: 100%;
-  height: 520px; /* visible area */
-  overflow: hidden;
-  border-radius: 20px; /* optional */
-}
-
-.jotform-wrapper iframe {
-  width: 100%;
-  height: 575px; /* taller than wrapper */
-  border: none;
-  margin-bottom: -55px; /* crops bottom */
-}
 /* ══════════════════════════════
    PAGE SHELL
 ══════════════════════════════ */
