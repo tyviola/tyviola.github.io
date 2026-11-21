@@ -35,7 +35,11 @@
   body{background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.5}
   button{font:inherit;cursor:pointer;min-height:44px}
   a{min-height:44px;display:inline-flex;align-items:center}
-  .wrap{max-width:880px;margin:0 auto;padding:20px 16px 40px}
+  .wrap{max-width:880px;margin:0 auto;padding:92px 16px 40px}
+  /* Site nav is fixed (72px desktop, 64px mobile) and every other page
+     offsets with .page-shell padding-top — without the same offset here
+     the fixed nav covered the eyebrow and the top of the H1. */
+  @media(max-width:640px){.wrap{padding-top:84px}}
   /* Header */
   .eyebrow{display:flex;align-items:center;gap:10px;font-family:"DM Sans",sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:600}
   .eyebrow::before{content:"";width:28px;height:3px;background:var(--purple);display:inline-block}
@@ -292,8 +296,8 @@
   var GOLD={code:"★ FIX",name:"Broken workflow",sub:"The process everyone works around",hrs:5,gold:true};
   var DIFF={
     chill:{spawn:1020,life:1750,label:"Chill",duration:30},
-    busy:{spawn:820,life:1400,label:"Busy",duration:60},
-    chaos:{spawn:640,life:1100,label:"Chaos",duration:120}
+    busy:{spawn:1050,life:1800,label:"Busy",duration:60},
+    chaos:{spawn:850,life:1500,label:"Chaos",duration:120}
   };
   var MAXMISS=12;
   var board=document.getElementById('board');
