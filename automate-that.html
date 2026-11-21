@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>Automate That! — Viola Technology Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<style>
+  :root{
+    /* Viola Technology brand palette — violatechnology.com */
+    --purple:#5B3FA6; --purple-light:#7B5DC9; --purple-deep:#3D2280; --purple-glow:rgba(91,63,166,.18);
+    --charcoal:#2C3240; --charcoal-mid:#3D4455;
+    --bg:#F7F4EE; --surface:#ffffff; --surface2:#F1EDE4; --ink:#2C3240; --muted:#7A8099;
+    --line:#DDD5EC; --navy:#2C3240; --navy2:#3D4455; --teal:#5B3FA6; --teal-bright:#7B5DC9;
+    --amber:#d97706; --amber-bg:#fef3c7; --red:#dc2626; --red-bg:#fee2e2; --gold:#b45309;
+    --slot:#EDE9DF; --slot-border:#CFC6E4;
+    --shadow:0 10px 30px rgba(44,50,64,.12);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --purple:#7B5DC9; --purple-light:#A78BDB; --purple-deep:#5B3FA6; --purple-glow:rgba(123,93,201,.25);
+      --bg:#1D222D; --surface:#2C3240; --surface2:#343B4B; --ink:#F7F4EE; --muted:#A6ACC0;
+      --line:#454E63; --navy:#F7F4EE; --navy2:#ffffff; --teal:#A78BDB; --teal-bright:#A78BDB;
+      --amber:#fbbf24; --amber-bg:#3a2c07; --red:#f87171; --red-bg:#3f1515; --gold:#fbbf24;
+      --slot:#343B4B; --slot-border:#4A5468; --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.5}
+  button{font:inherit;cursor:pointer;min-height:44px}
+  a{min-height:44px;display:inline-flex;align-items:center}
+  .wrap{max-width:880px;margin:0 auto;padding:20px 16px 40px}
+  /* Header */
+  .eyebrow{display:flex;align-items:center;gap:10px;font-family:"DM Sans",sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);font-weight:600}
+  .eyebrow::before{content:"";width:28px;height:3px;background:var(--purple);display:inline-block}
+  h1{font-family:"Space Grotesk","DM Sans",sans-serif;font-size:clamp(42px,9vw,72px);line-height:.98;letter-spacing:-.02em;margin:10px 0 8px;color:var(--charcoal);font-weight:700;text-transform:uppercase}
+  @media (prefers-color-scheme: dark){h1{color:var(--ink)}}
+  h1 span{color:var(--teal)}
+  .lede{font-size:17px;color:var(--muted);max-width:620px;margin:0}
+  .lede strong{color:var(--ink)}
+  /* HUD */
+  .hud{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 12px}
+  @media(max-width:560px){.hud{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+  .stat label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .stat b{font-family:"Space Grotesk",sans-serif;font-size:26px;line-height:1.1;display:block;margin-top:2px}
+  .stat small{color:var(--muted);font-size:12px}
+  .stat.hero b{color:var(--teal)}
+  /* Time bar */
+  .timebar{height:10px;background:var(--slot);border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+  .timebar i{display:block;height:100%;width:100%;background:var(--teal);transition:width .15s linear}
+  .timebar.low i{background:var(--red)}
+  .timerow{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);margin:6px 2px 14px}
+  /* Win timer */
+  .wintimer{background:var(--charcoal);color:#fff;border-radius:16px;padding:16px 18px;margin:0 0 14px;box-shadow:var(--shadow)}
+  @media (prefers-color-scheme: dark){.wintimer{background:#232936;border:1px solid var(--line)}}
+  .wt-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .wt-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple-light);font-weight:700}
+  @media (prefers-color-scheme: light){.wt-label{color:#B7A6E8}}
+  .wt-clock{font-family:"Space Grotesk",sans-serif;font-size:30px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+  .wt-clock small{font-size:15px;color:rgba(255,255,255,.55);font-weight:500}
+  .wt-bar{height:12px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden;margin:12px 0 8px}
+  .wt-bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--purple-light),#5B3FA6);background-color:#7B5DC9;transition:width .15s linear}
+  .wintimer.won .wt-bar i{background:#fff}
+  .wt-sub{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.65)}
+  .wt-sub b{color:#fff}
+  .wt-state{font-weight:700;color:#C9B8F5}
+  .wintimer.won .wt-state{color:#fff}
+  /* Code files */
+  .codefiles{margin-top:14px}
+  .codefiles code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--purple-glow);color:var(--purple);padding:2px 7px;border-radius:6px}
+  @media (prefers-color-scheme: dark){.codefiles code{color:var(--purple-light)}}
+  /* Controls */
+  .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .seg{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .seg button{border:0;background:transparent;border-radius:999px;padding:8px 14px;font-weight:600;color:var(--muted);min-height:40px}
+  .seg button[aria-pressed="true"]{background:var(--purple);color:#fff;box-shadow:0 3px 10px rgba(91,63,166,.28)}
+  .seg button small{display:block;font-size:10.5px;font-weight:600;opacity:.75;letter-spacing:.04em}
+  .btn{border:0;border-radius:8px;padding:12px 22px;font-weight:700}
+  .btn-primary{background:var(--purple);color:#fff;box-shadow:0 8px 24px rgba(91,63,166,.35)}
+  .btn-primary:active{transform:translateY(1px)}
+  .btn-ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+  .btn:disabled{opacity:.55;cursor:not-allowed}
+  /* Board */
+  .board-wrap{position:relative;background:var(--charcoal);border-radius:20px;padding:14px;box-shadow:var(--shadow)}
+  @media (prefers-color-scheme: dark){.board-wrap{background:#232936;border:1px solid var(--line)}}
+  .board-head{display:flex;justify-content:space-between;align-items:center;color:#cbd5e1;padding:2px 4px 12px;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .board-head b{color:#fff}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--purple-light);display:inline-block;margin-right:6px;vertical-align:middle}
+  .board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .slot{position:relative;border:2px dashed var(--slot-border);background:rgba(255,255,255,.06);border-radius:16px;min-height:118px;padding:0;text-align:left;color:#94a3b8;overflow:hidden;-webkit-tap-highlight-color:transparent}
+  @media(max-width:560px){.slot{min-height:104px}}
+  .slot .empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .slot .empty i{font-style:normal;font-size:20px;opacity:.5}
+  .slot.active{border-style:solid;border-color:#fff;background:#fff;color:#101828;cursor:pointer;animation:pop .18s ease-out}
+  .slot.active.gold{background:#fffbeb;border-color:var(--amber)}
+  .slot.hit{animation:hit .25s ease-out}
+  .slot.missed{animation:shake .3s ease}
+  @keyframes pop{from{transform:scale(.86);opacity:.4}to{transform:scale(1);opacity:1}}
+  @keyframes hit{0%{transform:scale(1)}40%{transform:scale(.94)}100%{transform:scale(1)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+  @media (prefers-reduced-motion: reduce){.slot.active,.slot.hit,.slot.missed{animation:none}.float-up{animation:none}}
+  .task{padding:12px;display:flex;flex-direction:column;gap:6px;height:100%}
+  .task-top{display:flex;justify-content:space-between;align-items:center;gap:6px}
+  .code{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;background:#5B3FA6;color:#fff;padding:3px 7px;border-radius:6px;letter-spacing:.04em;white-space:nowrap}
+  .gold .code{background:var(--amber)}
+  .hrs{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;color:var(--teal);white-space:nowrap}
+  .gold .hrs{color:var(--gold)}
+  .task-name{font-weight:700;font-size:15px;line-height:1.25}
+  @media(max-width:560px){.task-name{font-size:13.5px}.task{padding:10px}}
+  .task-sub{font-size:12px;color:#64748b;line-height:1.3}
+  .task-bar{margin-top:auto;height:5px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+  .task-bar i{display:block;height:100%;background:var(--teal);width:100%;animation:shrink linear forwards}
+  .gold .task-bar i{background:var(--amber)}
+  @keyframes shrink{from{width:100%}to{width:0%}}
+  .float-up{position:absolute;z-index:5;font-family:"IBM Plex Mono",monospace;font-weight:700;color:#C9B8F5;font-size:15px;pointer-events:none;animation:floatUp .9s ease-out forwards;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+  @keyframes floatUp{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-36px)}}
+  /* Meter */
+  .meter-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+  .meter-row label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+  .meter{height:10px;background:var(--slot);border-radius:999px;overflow:hidden}
+  .meter i{display:block;height:100%;width:0%;background:var(--amber);transition:width .25s}
+  .meter i.danger{background:var(--red)}
+  .streak{font-family:"IBM Plex Mono",monospace;text-align:right}
+  .streak b{font-size:22px;display:block;line-height:1}
+  .streak span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  /* Message */
+  .message{min-height:28px;text-align:center;font-weight:600;margin:12px 0 2px}
+  .message.good{color:var(--teal)} .message.bad{color:var(--red)}
+  /* End panel */
+  .end{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:16px;box-shadow:var(--shadow)}
+  .end h2{font-family:"Space Grotesk",sans-serif;font-size:30px;margin:0 0 4px;line-height:1.08}
+  .end.win{border-color:var(--purple);box-shadow:0 12px 34px rgba(91,63,166,.22)}
+  .end .rank{color:var(--teal);font-weight:700}
+  .end-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+  @media(max-width:560px){.end-grid{grid-template-columns:repeat(3,1fr);gap:8px}.end-grid .stat b{font-size:19px}}
+  /* Sections */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .card h3{margin:0 0 10px;font-size:16px}
+  .card ol,.card ul{margin:0;padding-left:20px;color:var(--muted)}
+  .card li{margin:6px 0}
+  .card li strong{color:var(--ink)}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .chip{font-family:"IBM Plex Mono",monospace;font-size:11.5px;border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:6px 10px}
+  .cta{margin-top:14px;background:linear-gradient(135deg,#5B3FA6 0%,#3D2280 100%);color:#EDE9FA;border-radius:18px;padding:22px}
+  .cta h3{color:#fff;margin:0 0 6px;font-size:20px;font-family:"Space Grotesk",sans-serif}
+  .cta p{margin:0 0 14px;color:rgba(255,255,255,.72);max-width:560px}
+  .cta .row{display:flex;flex-wrap:wrap;gap:10px}
+  .cta a{padding:10px 18px;border-radius:8px;font-weight:700;text-decoration:none}
+  .cta a.primary{background:#fff;color:#5B3FA6}
+  .cta a.secondary{border:1px solid rgba(255,255,255,.45);color:#fff}
+  footer{margin-top:22px;color:var(--muted);font-size:13px;text-align:center}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<script src="nav.js"></script>
+<div class="wrap">
+  <div class="eyebrow">Viola Technology · Playable demo</div>
+  <h1>Automate<br><span>That!</span></h1>
+  <p class="lede">Manual work is piling up on the desk. <strong>Tap each task to automate it</strong> before it expires — every automation banks real hours saved per week. <strong>Survive to the win time to win:</strong> 30 seconds on Chill, 60 on Busy, 120 on Chaos — without getting buried.</p>
+
+  <div class="hud" aria-label="Score">
+    <div class="stat hero"><label>Hours saved / wk</label><b id="score">0.0</b><small id="bestLine">Session best: 0.0</small></div>
+    <div class="stat"><label>Time to win</label><b id="clock">60.0s</b><small id="goalLine">Goal: survive 60s · Busy</small></div>
+    <div class="stat"><label>Automated</label><b id="hits">0</b><small id="missLine">Missed: 0</small></div>
+    <div class="stat"><label>Streak</label><b id="streakHud">0</b><small>5 in a row = +2 hrs bonus</small></div>
+  </div>
+
+  <section class="wintimer" id="winTimer" aria-label="Win timer">
+    <div class="wt-top">
+      <span class="wt-label">Win timer — survive to win</span>
+      <span class="wt-clock"><span id="wtElapsed">0:00</span> <small>/ <span id="wtGoalClock">1:00</span></small></span>
+    </div>
+    <div class="wt-bar"><i id="wtFill"></i></div>
+    <div class="wt-sub">
+      <span id="wtGoal">Busy: reach <b>1:00</b> without 12 misses and you win.</span>
+      <span class="wt-state" id="wtState">Not started</span>
+    </div>
+  </section>
+
+  <div class="timebar" id="timebar"><i id="timefill"></i></div>
+  <div class="timerow"><span>ROUND TIMER</span><span id="phase">Ready when you are</span></div>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Difficulty">
+      <button type="button" data-diff="chill" aria-pressed="false">Chill<small>WIN AT 0:30</small></button>
+      <button type="button" data-diff="busy" aria-pressed="true">Busy<small>WIN AT 1:00</small></button>
+      <button type="button" data-diff="chaos" aria-pressed="false">Chaos<small>WIN AT 2:00</small></button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-ghost" id="soundBtn" type="button" aria-pressed="true">Sound: On</button>
+      <button class="btn btn-primary" id="startBtn" type="button">▶ Start round</button>
+    </div>
+  </div>
+
+  <div class="board-wrap" id="boardWrap">
+    <div class="board-head"><span><span class="dot"></span><b>The Desk</b> · Incoming manual work</span><span id="liveCount">0 active</span></div>
+    <div class="board" id="board" role="group" aria-label="Task board"></div>
+  </div>
+
+  <div class="meter-row">
+    <div>
+      <label for="pileMeter">Pile-up meter — 12 misses ends the round early</label>
+      <div class="meter" id="pileMeter"><i id="pileFill"></i></div>
+    </div>
+    <div class="streak"><b id="pileCount">0 / 12</b><span>Buried at 12</span></div>
+  </div>
+
+  <p class="message" id="message" aria-live="polite">Pick a pace and hit Start. Survive to the win time — 0:30 Chill · 1:00 Busy · 2:00 Chaos. Gold tickets are worth 5 hours.</p>
+
+  <section class="end" id="endPanel" hidden>
+    <p class="eyebrow" style="margin-bottom:6px" id="endEyebrow">Round over</p>
+    <h2 id="endTitle">You saved 0 hours a week.</h2>
+    <p style="margin:6px 0 0;color:var(--muted)"><span class="rank" id="endRank"></span> <span id="endCopy"></span></p>
+    <div class="end-grid">
+      <div class="stat"><label>Hours saved</label><b id="endHours">0.0</b><small>per week, every week</small></div>
+      <div class="stat"><label>Automated</label><b id="endHits">0</b><small id="endMiss">0 missed</small></div>
+      <div class="stat"><label>Best streak</label><b id="endStreak">0</b><small>In a row</small></div>
+    </div>
+    <p style="color:var(--muted);margin:0 0 14px" id="endYear"></p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="againBtn" type="button">Play again</button>
+      <a class="btn btn-ghost" style="text-decoration:none;display:inline-flex;align-items:center" href="mailto:tyviola@violatechnology.com?subject=Automation%20Opportunity%20Assessment&body=Hi%20Ty%2C%20I%20played%20Automate%20That!%20and%20want%20to%20talk%20about%20automating%20our%20manual%20work.">Book the free assessment</a>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>How to play</h3>
+      <ol>
+        <li><strong>Tap a task</strong> the moment it appears to automate it.</li>
+        <li><strong>Survive to the win time.</strong> The win timer at the top counts up — reach <strong>0:30 on Chill, 1:00 on Busy, or 2:00 on Chaos</strong> and you win the round.</li>
+        <li><strong>Don't let tasks expire</strong> — expired tasks pile up. 12 misses and you're buried before the timer runs out.</li>
+        <li><strong>Chain streaks.</strong> Every 5 automations in a row adds a +2 hr bonus. Gold tickets are worth 5 hrs.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>What you're automating</h3>
+      <p style="color:var(--muted);margin:0">These aren't made-up chores — they're the exact jobs Viola Technology automates for real teams with Power Automate, ConnectWise, Teams, and Power BI.</p>
+      <div class="legend">
+        <span class="chip">INV · Invoices</span><span class="chip">RPT · Reports</span><span class="chip">APR · Approvals</span>
+        <span class="chip">TKT · Ticket routing</span><span class="chip">ONB · Onboarding</span><span class="chip">★ Gold · Broken workflow</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="cta">
+    <h3>Your real desk looks like this too?</h3>
+    <p>In the game you raced the win timer — 30, 60, or 120 seconds. In real work, those same tasks come back every single week. Viola Technology builds the automations that clear them for good — starting with a free 45-minute Automation Opportunity Assessment.</p>
+    <div class="row">
+      <a class="primary" href="mailto:tyviola@violatechnology.com?subject=Automation%20Opportunity%20Assessment&body=Hi%20Ty%2C%20I%20played%20Automate%20That!%20and%20want%20to%20talk%20about%20automating%20our%20manual%20work.">Book my free assessment</a>
+      <a class="secondary" href="https://violatechnology.com" target="_blank" rel="noopener">violatechnology.com</a>
+    </div>
+  </section>
+
+  <section class="card codefiles">
+    <h3>Get the code</h3>
+    <p style="color:var(--muted);margin:0 0 12px">The whole game ships as one self-contained file — <code>automate-that.html</code> — with the markup, styles, and game logic in a single document. No build step and no dependencies beyond Google Fonts, so it drops straight into violatechnology.com as-is. Download it here, or copy the source of this page.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="dlBtn" type="button">Download automate-that.html</button>
+      <button class="btn btn-ghost" id="copyBtn" type="button">Copy the code</button>
+    </div>
+    <p style="color:var(--muted);margin:12px 0 0;font-size:13px" id="dlNote">One file: HTML + CSS + JavaScript. Host it anywhere static hosting works.</p>
+  </section>
+
+  <footer>Automate That! — a Viola Technology demo. Custom solutions, process improvement &amp; workflow automation for scaling businesses.</footer>
+</div>
+<p class="sr" aria-live="polite" id="srLive"></p>
+
+<script>
+(function(){
+  var TASKS=[
+    {code:"INV",name:"Manual invoice entry",sub:"Typing the same invoice in twice",hrs:2.5},
+    {code:"RPT",name:"Copy-paste report",sub:"Moving numbers between spreadsheets",hrs:1.5},
+    {code:"APR",name:"Chasing approvals",sub:"“Just following up…” for the 4th time",hrs:2},
+    {code:"DAT",name:"Data re-entry",sub:"Same info, three different systems",hrs:2},
+    {code:"CAL",name:"Scheduling ping-pong",sub:"Six emails to book one meeting",hrs:1},
+    {code:"XLS",name:"Spreadsheet cleanup",sub:"Fixing formulas someone broke",hrs:1.5},
+    {code:"TKT",name:"Ticket routing",sub:"Reading & forwarding every ticket by hand",hrs:3},
+    {code:"ONB",name:"Onboarding paperwork",sub:"Chasing forms for every new hire",hrs:2.5},
+    {code:"EML",name:"Status update emails",sub:"Writing the same update every Friday",hrs:1}
+  ];
+  var GOLD={code:"★ FIX",name:"Broken workflow",sub:"The process everyone works around",hrs:5,gold:true};
+  var DIFF={
+    chill:{spawn:1020,life:1750,label:"Chill",duration:30},
+    busy:{spawn:820,life:1400,label:"Busy",duration:60},
+    chaos:{spawn:640,life:1100,label:"Chaos",duration:120}
+  };
+  var MAXMISS=12;
+  var board=document.getElementById('board');
+  var slots=[];
+  for(var i=0;i<9;i++){
+    var b=document.createElement('button');
+    b.type='button'; b.className='slot'; b.setAttribute('aria-label','Empty desk slot');
+    b.innerHTML='<span class="empty"><i>✓</i><span>Clear</span></span>';
+    b.dataset.idx=i;
+    board.appendChild(b); slots.push({el:b,task:null,timer:null,expiresAt:0});
+  }
+  var el={
+    score:document.getElementById('score'),clock:document.getElementById('clock'),hits:document.getElementById('hits'),
+    missLine:document.getElementById('missLine'),streakHud:document.getElementById('streakHud'),bestLine:document.getElementById('bestLine'),
+    goalLine:document.getElementById('goalLine'),
+    timefill:document.getElementById('timefill'),timebar:document.getElementById('timebar'),phase:document.getElementById('phase'),
+    pileFill:document.getElementById('pileFill'),pileCount:document.getElementById('pileCount'),liveCount:document.getElementById('liveCount'),
+    message:document.getElementById('message'),startBtn:document.getElementById('startBtn'),soundBtn:document.getElementById('soundBtn'),
+    endPanel:document.getElementById('endPanel'),endEyebrow:document.getElementById('endEyebrow'),sr:document.getElementById('srLive'),wrap:document.getElementById('boardWrap'),
+    winTimer:document.getElementById('winTimer'),wtElapsed:document.getElementById('wtElapsed'),wtGoalClock:document.getElementById('wtGoalClock'),
+    wtFill:document.getElementById('wtFill'),wtGoal:document.getElementById('wtGoal'),wtState:document.getElementById('wtState')
+  };
+  var diff='busy', soundOn=true, audioCtx=null;
+  var roundDuration=DIFF.busy.duration, roundLabel=DIFF.busy.label;
+  var playing=false, timeLeft=roundDuration, score=0, hits=0, missed=0, streak=0, bestStreak=0, best=0, elapsed=0, lastResult='';
+  var spawnTimer=null, tickTimer=null, lastSpawnInterval=0;
+
+  function fmtClock(s){
+    s=Math.max(0,Math.ceil(s));
+    var m=Math.floor(s/60), sec=s%60;
+    return m+':'+(sec<10?'0':'')+sec;
+  }
+  document.querySelectorAll('[data-diff]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      diff=btn.dataset.diff;
+      document.querySelectorAll('[data-diff]').forEach(function(x){x.setAttribute('aria-pressed', x===btn?'true':'false');});
+      if(!playing){
+        roundDuration=DIFF[diff].duration; roundLabel=DIFF[diff].label; timeLeft=roundDuration; elapsed=0; lastResult='';
+        el.winTimer.classList.remove('won');
+        setMsg(DIFF[diff].label+' selected — survive '+fmtClock(roundDuration)+' to win. Hit Start when ready.','');
+        render();
+      }
+    });
+  });
+  el.soundBtn.addEventListener('click',function(){
+    soundOn=!soundOn; el.soundBtn.textContent='Sound: '+(soundOn?'On':'Off'); el.soundBtn.setAttribute('aria-pressed', soundOn?'true':'false');
+  });
+  function beep(freq,dur,type){
+    if(!soundOn) return;
+    try{
+      if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+      if(audioCtx.state==='suspended') audioCtx.resume();
+      var o=audioCtx.createOscillator(), g=audioCtx.createGain();
+      o.type=type||'sine'; o.frequency.value=freq; g.gain.setValueAtTime(.12,audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+(dur||.09));
+      o.connect(g); g.connect(audioCtx.destination); o.start(); o.stop(audioCtx.currentTime+(dur||.09));
+    }catch(e){}
+  }
+  function setMsg(t,cls){ el.message.textContent=t; el.message.className='message'+(cls?' '+cls:''); }
+  function fmt(n){ return (Math.round(n*10)/10).toFixed(1); }
+  function render(){
+    el.score.textContent=fmt(score); el.clock.textContent=fmt(Math.max(0,timeLeft))+'s';
+    el.hits.textContent=hits; el.missLine.textContent='Missed: '+missed;
+    el.streakHud.textContent=streak; el.bestLine.textContent='Session best: '+fmt(best);
+    el.goalLine.textContent='Goal: survive '+roundDuration+'s · '+roundLabel;
+    var pct=Math.max(0,timeLeft/roundDuration*100); el.timefill.style.width=pct+'%';
+    el.timebar.classList.toggle('low', timeLeft<=10);
+    el.pileFill.style.width=Math.min(100, missed/MAXMISS*100)+'%';
+    el.pileFill.classList.toggle('danger', missed>=9);
+    el.pileCount.textContent=missed+' / '+MAXMISS;
+    var active=slots.filter(function(s){return !!s.task;}).length;
+    el.liveCount.textContent=active+' active';
+    var frac=roundDuration? elapsed/roundDuration : 0;
+    el.phase.textContent=!playing?'Ready when you are':(frac<0.25?'Warming up':frac<0.5?'Picking up':frac<0.75?'Busy desk':'Final stretch — hold on!');
+    // Win timer
+    el.wtElapsed.textContent=fmtClock(Math.min(elapsed,roundDuration));
+    el.wtGoalClock.textContent=fmtClock(roundDuration);
+    el.wtFill.style.width=Math.min(100,frac*100)+'%';
+    el.wtGoal.innerHTML=roundLabel+': reach <b>'+fmtClock(roundDuration)+'</b> without 12 misses and you win.';
+    el.wtState.textContent = lastResult==='won' ? '★ You win!' : lastResult==='buried' ? 'Buried — round over' : !playing ? 'Not started' : (timeLeft<=10 ? 'Almost there — '+Math.ceil(timeLeft)+'s to win!' : 'Surviving… '+Math.ceil(timeLeft)+'s to go');
+  }
+  function clearSlot(s){
+    if(s.timer){clearTimeout(s.timer); s.timer=null;}
+    s.task=null; var b=s.el; b.className='slot'; b.disabled=false;
+    b.innerHTML='<span class="empty"><i>✓</i><span>Clear</span></span>'; b.setAttribute('aria-label','Empty desk slot');
+  }
+  function spawn(){
+    if(!playing) return;
+    var empty=slots.filter(function(s){return !s.task;});
+    if(empty.length){
+      var s=empty[Math.floor(Math.random()*empty.length)];
+      var isGold=Math.random()<0.08;
+      var t=isGold?GOLD:TASKS[Math.floor(Math.random()*TASKS.length)];
+      var ramp=Math.max(.72, 1-(elapsed/roundDuration)*.28);
+      var life=DIFF[diff].life*ramp*(0.9+Math.random()*0.25);
+      s.task=t;
+      var b=s.el; b.className='slot active'+(isGold?' gold':''); b.disabled=false;
+      b.setAttribute('aria-label', t.name+', worth '+t.hrs+' hours. Tap to automate.');
+      b.innerHTML='<span class="task"><span class="task-top"><span class="code">'+t.code+'-'+(100+Math.floor(Math.random()*900))+'</span><span class="hrs">+'+t.hrs+' hrs/wk</span></span><span class="task-name">'+t.name+'</span><span class="task-sub">'+t.sub+'</span><span class="task-bar"><i style="animation-duration:'+life+'ms"></i></span></span>';
+      s.timer=setTimeout(function(){ expire(s); }, life);
+    }
+    var ramp2=Math.max(.7, 1-(elapsed/roundDuration)*.3);
+    lastSpawnInterval=DIFF[diff].spawn*ramp2*(0.85+Math.random()*0.3);
+    spawnTimer=setTimeout(spawn, lastSpawnInterval);
+  }
+  function expire(s){
+    if(!playing||!s.task) return;
+    var name=s.task.name; clearSlot(s); s.el.classList.add('missed');
+    setTimeout(function(){s.el.classList.remove('missed');},320);
+    missed++; streak=0; beep(150,.14,'square');
+    setMsg('“'+name+'” piled up. '+missed+' missed — '+(MAXMISS-missed)+' from buried.','bad');
+    render();
+    if(missed>=MAXMISS) endRound(true);
+  }
+  slots.forEach(function(s){
+    s.el.addEventListener('click',function(){
+      if(!playing||!s.task) return;
+      var t=s.task; var rect=s.el.getBoundingClientRect(); var wrect=el.wrap.getBoundingClientRect();
+      clearTimeout(s.timer); s.timer=null;
+      hits++; streak++; if(streak>bestStreak) bestStreak=streak;
+      var gained=t.hrs; var bonus=false;
+      if(streak>0 && streak%5===0){ gained+=2; bonus=true; }
+      score+=gained;
+      // floating label
+      var f=document.createElement('span'); f.className='float-up'; f.textContent='+'+fmt(gained)+' hrs';
+      f.style.left=(rect.left-wrect.left+rect.width/2-34)+'px'; f.style.top=(rect.top-wrect.top+6)+'px';
+      el.wrap.appendChild(f); setTimeout(function(){f.remove();},950);
+      s.el.classList.add('hit'); var taskRef=s; clearSlot(s);
+      setTimeout(function(){taskRef.el.classList.remove('hit');},260);
+      beep(t.gold?880:620,.08,'sine'); if(bonus) setTimeout(function(){beep(990,.1,'sine');},90);
+      setMsg(bonus?('Streak bonus! 5 in a row — +2 extra hours. Total streak: '+streak):(t.gold?'Gold ticket automated — +5 hrs. That one was costing everyone.':'Automated “'+t.name+'” — +'+fmt(t.hrs)+' hrs/wk saved.'),'good');
+      el.sr.textContent='Automated '+t.name+'. '+fmt(score)+' hours saved.';
+      render();
+    });
+  });
+  function startRound(){
+    slots.forEach(clearSlot);
+    if(spawnTimer) clearTimeout(spawnTimer); if(tickTimer) clearInterval(tickTimer);
+    roundDuration=DIFF[diff].duration; roundLabel=DIFF[diff].label;
+    playing=true; timeLeft=roundDuration; elapsed=0; score=0; hits=0; missed=0; streak=0; bestStreak=0; lastResult='';
+    el.winTimer.classList.remove('won');
+    el.endPanel.hidden=true; el.endPanel.classList.remove('win'); el.startBtn.disabled=true; el.startBtn.textContent='Round running…';
+    setMsg('Go! Survive to '+fmtClock(roundDuration)+' to win — tap tasks before their bars run out.','good'); beep(520,.08,'sine');
+    render();
+    var last=Date.now();
+    tickTimer=setInterval(function(){
+      var now=Date.now(); var dt=(now-last)/1000; last=now;
+      timeLeft-=dt; elapsed+=dt;
+      if(timeLeft<=0){ timeLeft=0; render(); endRound(false); return; }
+      render();
+    },100);
+    spawnTimer=setTimeout(spawn,350);
+  }
+  function endRound(buried){
+    if(!playing) return;
+    playing=false;
+    if(spawnTimer) clearTimeout(spawnTimer); if(tickTimer) clearInterval(tickTimer);
+    slots.forEach(function(s){ clearSlot(s); s.el.disabled=true; });
+    if(score>best) best=score;
+    el.startBtn.disabled=false; el.startBtn.textContent='▶ Start round';
+    var won=!buried;
+    lastResult= won ? 'won' : 'buried';
+    el.winTimer.classList.toggle('won', won);
+    if(won) elapsed=roundDuration;
+    var scale=roundDuration/60;
+    var rank, copy;
+    if(buried){ rank='Buried — but fixable.'; copy='The pile won this round with '+fmtClock(elapsed)+' on the win timer. That is exactly what happens without automation: the work does not slow down, it just stacks up.'; }
+    else if(score>=55*scale){ rank='Automation Architect.'; copy='Elite pace. You cleared the desk like a well-built Power Automate flow — nothing manual survived.'; }
+    else if(score>=38*scale){ rank='Efficiency Pro.'; copy='Strong round. Most teams would feel this difference in the first week.'; }
+    else if(score>=22*scale){ rank='Getting Systematic.'; copy='A solid win — and proof of how fast the small tasks add up when nobody automates them.'; }
+    else { rank='Won — the hard way.'; copy='You beat the clock, but barely. Every task that piled up here is a real recurring job on a real team right now.'; }
+    el.endEyebrow.textContent= won ? ('★ You win — survived '+fmtClock(roundDuration)+' on '+roundLabel) : 'Round over — buried';
+    el.endPanel.classList.toggle('win', won);
+    document.getElementById('endTitle').textContent= buried ? ('Buried at '+fmt(score)+' hours saved.') : ('You win! You saved '+fmt(score)+' hours a week.');
+    document.getElementById('endRank').textContent=rank;
+    document.getElementById('endCopy').textContent=copy;
+    document.getElementById('endHours').textContent=fmt(score);
+    document.getElementById('endHits').textContent=hits;
+    document.getElementById('endMiss').textContent=missed+' missed';
+    document.getElementById('endStreak').textContent=bestStreak;
+    document.getElementById('endYear').textContent='That is roughly '+Math.round(score*52)+' hours a year — about '+(Math.round(score*52/40*10)/10)+' work-weeks — returned to your team, every year, from automations that run whether anyone remembers them or not.';
+    el.endPanel.hidden=false;
+    setMsg(buried?'Buried! The pile-up hit 12 before the win timer ran out. Run it back — or automate it for real below.':('★ You win! You survived the full '+fmtClock(roundDuration)+' on '+roundLabel+'. See what that pace is worth below.'), won?'good':'');
+    if(buried){ beep(180,.18,'sine'); }
+    else { beep(740,.12,'sine'); setTimeout(function(){beep(880,.12,'sine');},120); setTimeout(function(){beep(1108,.2,'sine');},240); }
+    render();
+    el.endPanel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  el.startBtn.addEventListener('click',startRound);
+  document.getElementById('againBtn').addEventListener('click',function(){ startRound(); window.scrollTo({top:0,behavior:'smooth'}); });
+  // ── Code download: serialize a clean standalone copy of this page ──
+  function cleanSource(){
+    var clone=document.documentElement.cloneNode(true);
+    var b=clone.querySelector('#board'); if(b) b.innerHTML='';
+    var ep=clone.querySelector('#endPanel'); if(ep){ ep.setAttribute('hidden',''); ep.classList.remove('win'); }
+    var wt=clone.querySelector('#winTimer'); if(wt) wt.classList.remove('won');
+    var floats=clone.querySelectorAll('.float-up'); for(var i=0;i<floats.length;i++) floats[i].remove();
+    var sb=clone.querySelector('#startBtn'); if(sb){ sb.disabled=false; sb.textContent='▶ Start round'; }
+    var dn=clone.querySelector('#dlNote'); if(dn) dn.textContent='One file: HTML + CSS + JavaScript. Host it anywhere static hosting works.';
+    return '<!doctype html>\n<html lang="en">\n'+clone.innerHTML+'\n</html>';
+  }
+  var dlBtn=document.getElementById('dlBtn'), copyBtn=document.getElementById('copyBtn'), dlNote=document.getElementById('dlNote');
+  if(dlBtn) dlBtn.addEventListener('click',function(){
+    try{
+      var blob=new Blob([cleanSource()],{type:'text/html'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a'); a.href=url; a.download='automate-that.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){URL.revokeObjectURL(url);},2000);
+      if(dlNote) dlNote.textContent='Downloaded automate-that.html — one self-contained file, ready to host on violatechnology.com.';
+    }catch(e){ if(dlNote) dlNote.textContent='Download was blocked here — use “Copy the code” instead and save it as automate-that.html.'; }
+  });
+  if(copyBtn) copyBtn.addEventListener('click',function(){
+    var done=function(ok){ if(dlNote) dlNote.textContent= ok ? 'Code copied — paste it into a file named automate-that.html and host it anywhere.' : 'Copy was blocked here — use the Download button instead.'; };
+    var src=cleanSource();
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(src).then(function(){done(true);},function(){done(false);}); }
+    else{
+      var ta=document.createElement('textarea'); ta.value=src; ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      var ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
+      ta.remove(); done(ok);
+    }
+  });
+  render();
+})();
+</script>
+
+  <footer class="site-footer">
+    <div class="footer-logo">VIOLA <span>TECHNOLOGY</span></div>
+    <div class="footer-links">
+      <a href="consulting.html">Services</a>
+      <a href="automation.html">Automation</a>
+      <a href="cases.html">Case Studies</a>
+      <a href="digitalforms.html">Digital Forms</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">© 2025 Viola Technology</div>
+  </footer>
+</body>
+</html>
