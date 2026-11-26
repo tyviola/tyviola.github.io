@@ -1,2 +1,3 @@
 GitHub Pages redeploy trigger — no site content change.
 Pushed 2026-11-25 after the merge of PR #1 left Pages with no live deployment.
+Second trigger 2026-11-25 23:03 ET, after the repo was made public again.
