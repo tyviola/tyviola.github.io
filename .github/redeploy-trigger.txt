@@ -1,0 +1,2 @@
+GitHub Pages redeploy trigger — no site content change.
+Pushed 2026-11-25 after the merge of PR #1 left Pages with no live deployment.
